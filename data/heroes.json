@@ -1,0 +1,308 @@
+[
+  {
+    "hero_id": 6,
+    "name": "Abrams",
+    "release_date": "2024-04-24",
+    "source": "https://deadlock.wiki/Heroes_by_release",
+    "internal_name": "hero_atlas"
+  },
+  {
+    "hero_id": 15,
+    "name": "Bebop",
+    "release_date": "2024-04-24",
+    "source": "https://deadlock.wiki/Heroes_by_release",
+    "internal_name": "hero_bebop"
+  },
+  {
+    "hero_id": 11,
+    "name": "Dynamo",
+    "release_date": "2024-04-24",
+    "source": "https://deadlock.wiki/Heroes_by_release",
+    "internal_name": "hero_dynamo"
+  },
+  {
+    "hero_id": 17,
+    "name": "Grey Talon",
+    "release_date": "2024-04-24",
+    "source": "https://deadlock.wiki/Heroes_by_release",
+    "internal_name": "hero_orion"
+  },
+  {
+    "hero_id": 13,
+    "name": "Haze",
+    "release_date": "2024-04-24",
+    "source": "https://deadlock.wiki/Heroes_by_release",
+    "internal_name": "hero_haze"
+  },
+  {
+    "hero_id": 1,
+    "name": "Infernus",
+    "release_date": "2024-04-24",
+    "source": "https://deadlock.wiki/Heroes_by_release",
+    "internal_name": "hero_inferno"
+  },
+  {
+    "hero_id": 20,
+    "name": "Ivy",
+    "release_date": "2024-04-24",
+    "source": "https://deadlock.wiki/Heroes_by_release",
+    "internal_name": "hero_tengu"
+  },
+  {
+    "hero_id": 12,
+    "name": "Kelvin",
+    "release_date": "2024-04-24",
+    "source": "https://deadlock.wiki/Heroes_by_release",
+    "internal_name": "hero_kelvin"
+  },
+  {
+    "hero_id": 4,
+    "name": "Lady Geist",
+    "release_date": "2024-04-24",
+    "source": "https://deadlock.wiki/Heroes_by_release",
+    "internal_name": "hero_ghost"
+  },
+  {
+    "hero_id": 31,
+    "name": "Lash",
+    "release_date": "2024-04-24",
+    "source": "https://deadlock.wiki/Heroes_by_release",
+    "internal_name": "hero_lash"
+  },
+  {
+    "hero_id": 8,
+    "name": "McGinnis",
+    "release_date": "2024-04-24",
+    "source": "https://deadlock.wiki/Heroes_by_release",
+    "internal_name": "hero_forge"
+  },
+  {
+    "hero_id": 18,
+    "name": "Mo & Krill",
+    "release_date": "2024-04-24",
+    "source": "https://deadlock.wiki/Heroes_by_release",
+    "internal_name": "hero_krill"
+  },
+  {
+    "hero_id": 10,
+    "name": "Paradox",
+    "release_date": "2024-04-24",
+    "source": "https://deadlock.wiki/Heroes_by_release",
+    "internal_name": "hero_chrono"
+  },
+  {
+    "hero_id": 50,
+    "name": "Pocket",
+    "release_date": "2024-04-24",
+    "source": "https://deadlock.wiki/Heroes_by_release",
+    "internal_name": "hero_synth"
+  },
+  {
+    "hero_id": 2,
+    "name": "Seven",
+    "release_date": "2024-04-24",
+    "source": "https://deadlock.wiki/Heroes_by_release",
+    "internal_name": "hero_gigawatt"
+  },
+  {
+    "hero_id": 3,
+    "name": "Vindicta",
+    "release_date": "2024-04-24",
+    "source": "https://deadlock.wiki/Heroes_by_release",
+    "internal_name": "hero_hornet"
+  },
+  {
+    "hero_id": 25,
+    "name": "Warden",
+    "release_date": "2024-04-24",
+    "source": "https://deadlock.wiki/Heroes_by_release",
+    "internal_name": "hero_warden"
+  },
+  {
+    "hero_id": 7,
+    "name": "Wraith",
+    "release_date": "2024-04-24",
+    "source": "https://deadlock.wiki/Heroes_by_release",
+    "internal_name": "hero_wraith"
+  },
+  {
+    "hero_id": 27,
+    "name": "Yamato",
+    "release_date": "2024-04-24",
+    "source": "https://deadlock.wiki/Heroes_by_release",
+    "internal_name": "hero_yamato"
+  },
+  {
+    "hero_id": 35,
+    "name": "Viscous",
+    "release_date": "2024-08-01",
+    "source": "https://deadlock.wiki/Heroes_by_release",
+    "internal_name": "hero_viscous"
+  },
+  {
+    "hero_id": 19,
+    "name": "Shiv",
+    "release_date": "2024-08-15",
+    "source": "https://deadlock.wiki/Heroes_by_release",
+    "internal_name": "hero_shiv"
+  },
+  {
+    "hero_id": 52,
+    "name": "Mirage",
+    "release_date": "2024-09-26",
+    "source": "https://deadlock.wiki/Heroes_by_release",
+    "internal_name": "hero_mirage"
+  },
+  {
+    "hero_id": 16,
+    "name": "Calico",
+    "release_date": "2025-01-17",
+    "source": "https://deadlock.wiki/Heroes_by_release",
+    "internal_name": "hero_nano"
+  },
+  {
+    "hero_id": 14,
+    "name": "Holliday",
+    "release_date": "2025-01-17",
+    "source": "https://deadlock.wiki/Heroes_by_release",
+    "internal_name": "hero_astro"
+  },
+  {
+    "hero_id": 60,
+    "name": "Sinclair",
+    "release_date": "2025-01-17",
+    "source": "https://deadlock.wiki/Heroes_by_release",
+    "internal_name": "hero_magician"
+  },
+  {
+    "hero_id": 58,
+    "name": "Vyper",
+    "release_date": "2025-01-17",
+    "source": "https://deadlock.wiki/Heroes_by_release",
+    "internal_name": "hero_viper"
+  },
+  {
+    "hero_id": 63,
+    "name": "Mina",
+    "release_date": "2025-08-18",
+    "source": "https://deadlock.wiki/Heroes_by_release",
+    "internal_name": "hero_vampirebat"
+  },
+  {
+    "hero_id": 72,
+    "name": "Billy",
+    "release_date": "2025-08-20",
+    "source": "https://deadlock.wiki/Heroes_by_release",
+    "internal_name": "hero_punkgoat"
+  },
+  {
+    "hero_id": 69,
+    "name": "The Doorman",
+    "release_date": "2025-08-22",
+    "source": "https://deadlock.wiki/Heroes_by_release",
+    "internal_name": "hero_doorman"
+  },
+  {
+    "hero_id": 67,
+    "name": "Paige",
+    "release_date": "2025-08-25",
+    "source": "https://deadlock.wiki/Heroes_by_release",
+    "internal_name": "hero_bookworm"
+  },
+  {
+    "hero_id": 64,
+    "name": "Drifter",
+    "release_date": "2025-08-27",
+    "source": "https://deadlock.wiki/Heroes_by_release",
+    "internal_name": "hero_drifter"
+  },
+  {
+    "hero_id": 66,
+    "name": "Victor",
+    "release_date": "2025-08-29",
+    "source": "https://deadlock.wiki/Heroes_by_release",
+    "internal_name": "hero_frank"
+  },
+  {
+    "hero_id": 79,
+    "name": "Rem",
+    "release_date": "2026-01-26",
+    "source": "https://deadlock.wiki/Heroes_by_release",
+    "internal_name": "hero_familiar"
+  },
+  {
+    "hero_id": 76,
+    "name": "Graves",
+    "release_date": "2026-01-29",
+    "source": "https://deadlock.wiki/Heroes_by_release",
+    "internal_name": "hero_necro"
+  },
+  {
+    "hero_id": 80,
+    "name": "Silver",
+    "release_date": "2026-02-02",
+    "source": "https://deadlock.wiki/Heroes_by_release",
+    "internal_name": "hero_werewolf"
+  },
+  {
+    "hero_id": 65,
+    "name": "Venator",
+    "release_date": "2026-02-05",
+    "source": "https://deadlock.wiki/Heroes_by_release",
+    "internal_name": "hero_priest"
+  },
+  {
+    "hero_id": 81,
+    "name": "Celeste",
+    "release_date": "2026-02-09",
+    "source": "https://deadlock.wiki/Heroes_by_release",
+    "internal_name": "hero_unicorn"
+  },
+  {
+    "hero_id": 77,
+    "name": "Apollo",
+    "release_date": "2026-02-12",
+    "source": "https://deadlock.wiki/Heroes_by_release",
+    "internal_name": "hero_fencer"
+  },
+  {
+    "hero_id": 84,
+    "name": "Rat King",
+    "release_date": "2026-10-02",
+    "source": "https://deadlock.wiki/Heroes_by_release",
+    "internal_name": "hero_ratking",
+    "corroborating_source": "https://deadlocklabs.gg/new-heroes/"
+  },
+  {
+    "hero_id": 88,
+    "name": "Baba",
+    "release_date": "2026-10-06",
+    "source": "https://deadlock.wiki/Heroes_by_release",
+    "internal_name": "hero_baba",
+    "corroborating_source": "https://deadlocklabs.gg/new-heroes/"
+  },
+  {
+    "hero_id": 85,
+    "name": "Solomon",
+    "release_date": "2026-10-09",
+    "source": "https://deadlock.wiki/Heroes_by_release",
+    "internal_name": "hero_chessmaster",
+    "corroborating_source": "https://deadlocklabs.gg/new-heroes/"
+  },
+  {
+    "hero_id": 78,
+    "name": "Deadman Danny",
+    "release_date": "2026-10-13",
+    "source": "https://deadlock.wiki/Heroes_by_release",
+    "internal_name": "hero_deadpack",
+    "corroborating_source": "https://deadlocklabs.gg/new-heroes/"
+  },
+  {
+    "hero_id": 86,
+    "name": "Violet",
+    "release_date": "2026-10-16",
+    "source": "https://deadlock.wiki/Heroes_by_release",
+    "internal_name": "hero_artist",
+    "corroborating_source": "https://deadlocklabs.gg/new-heroes/"
+  }
+]

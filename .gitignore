@@ -1,0 +1,5 @@
+.work/
+**/bin/
+**/obj/
+__pycache__/
+.venv/

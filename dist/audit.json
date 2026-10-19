@@ -1,0 +1,20 @@
+{
+  "only_script_include_added": true,
+  "native_layout_sha256": "7a182d6b972217311465f24662dfe9da99ba2ae9397f2d61cc327f81295b2148",
+  "layout_sha256": "81beef8b2c0761a875681d82f640fe7cc3a9c531a6748aac465f2c41be0dc0a9",
+  "script_sha256": "323f17acea89faf092eed1f26d9a1b7e924e9f8ead1ad9c21dff72224feac3c0",
+  "files": [
+    "panorama/layout/popups/citadel_popup_roster_select.vxml_c",
+    "panorama/scripts/release_order.vjs_c"
+  ],
+  "version": "0.2.0",
+  "ui_only": true,
+  "known_heroes": 43,
+  "source_game_build": "26020302",
+  "runtime_verified": true,
+  "manager_verified": true,
+  "all_gates_passed": true,
+  "validation_status": "validated-local-and-manager",
+  "vpk_sha256": "928afd692d37ae0e23e6f91a2efaf6191c2495a1cd47665234440837a612282d",
+  "release_definition": "First main-roster availability; oldest first, English alphabetical ties."
+}
