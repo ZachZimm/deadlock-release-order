@@ -4,11 +4,11 @@ Orders the hero roster **oldest main-roster release first**, with **English alph
 
 This is a **UI-only mod**. It contains the native roster popup layout with one script include, plus an ordering script. It does **not** ship hero definitions, balance data, a DLL, an injector, or an anti-cheat bypass.
 
-![Release-order roster in the real game](docs/roster.png)
+![Release-order roster in the real game](docs/roster-0.2.1.png)
 
 ## Install with Deadlock Mod Manager
 
-1. Download `release-order-roster-0.2.0.zip` from [Releases](https://github.com/ZachZimm/deadlock-release-order/releases/latest).
+1. Download `release-order-roster-0.2.1.zip` from [Releases](https://github.com/ZachZimm/deadlock-release-order/releases/latest).
 2. Close Deadlock. Open **Deadlock Mod Manager → Mods Library → Add Local Mod**.
 3. Select the ZIP, name it **Release Order Roster**, and choose **HUD** as its category.
 4. Add it to the library, enable its toggle, and launch the modded game.
@@ -20,7 +20,7 @@ To disable or remove it, close the game, use the manager's toggle/removal contro
 ## Compatibility and scope
 
 - Source/test target: **Steam build 26020302**, Linux/Proton. See [verification](docs/verification.md) for exact tested artifact and evidence.
-- Reorders existing native cards **and their native grid wrappers**; hover, quick search, click handlers, selection and cancel remain native. The same popup is used by more than one picker mode.
+- Keeps native cards **and their native grid wrappers** in their original sibling order, positioning them visually by release rank. Hover, quick search, click handlers, selection and cancel remain native. The same popup is used by more than one picker mode.
 - This replaces `panorama/layout/popups/citadel_popup_roster_select.vxml_c`, so it conflicts with **Hero Select Plus** and other mods replacing that path. Disable conflicting replacements rather than relying on pak numbers.
 - **Disable after an unverified game update.** Rebuild/retest if the native layout changes, and update release data for newly released heroes. UI-only does not mean update-proof.
 - English alphabetical ties are intentional, even in another game language. Localized hero-name lookup is covered by unit tests; the recorded real-game checks use English.
@@ -58,9 +58,11 @@ The fingerprint checker compares the **base popup layout** against the release a
 
 ## How it works
 
-The current engine creates anonymous grid wrappers containing anonymous `CitadelHeroCard` panels. The script identifies native hero labels (or numeric IDs when available), resolves known heroes from the release manifest and localization, then moves only the existing direct grid children. It does not recreate or reparent cards.
+The current engine creates anonymous grid wrappers containing anonymous `CitadelHeroCard` panels. The script identifies native hero labels (or numeric IDs when available), resolves known heroes from the release manifest and localization, then assigns release-ranked visual positions to the existing direct grid children. It does not recreate, reparent, or move native card wrappers on the supported styled-panel path.
 
-One guarded controller polls the popup, skips hidden views, notices native order/population changes, verifies movement readback, and stops with a diagnostic if the API fails. Unknown cards are retained stably, and non-hero controls keep their final sibling slots.
+The native game reuses wrappers by sibling index during hero updates. Moving siblings, as version 0.2.0 did, caused the alphabetical/release-order flicker. Version 0.2.1 leaves that native index mapping alone and uses a non-flowing layout with measured card spacing and an explicit scroll extent. A guarded watchdog handles new wrappers, delayed geometry and resizing; normal hover changes do not need a corrective reorder. Unknown cards are retained stably, and non-hero controls keep their visual slots.
+
+When upgrading, disable/remove the old local import before enabling the new ZIP, so only one version supplies the roster layout.
 
 Exactly two VPK entries:
 

@@ -13,7 +13,7 @@ import zipfile
 from vpk import pack
 
 ROOT = Path(__file__).resolve().parents[1]
-VERSION = '0.2.0'
+VERSION = '0.2.1'
 LAYOUT = 'panorama/layout/popups/citadel_popup_roster_select.vxml_c'
 SCRIPT = 'panorama/scripts/release_order.vjs_c'
 

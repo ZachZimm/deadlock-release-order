@@ -1,63 +1,53 @@
-# Verification — Release Order Roster 0.2.0
+# Verification — Release Order Roster 0.2.1
 
 ## Artifact identity
 
-Source/tested Steam build: **26020302** on both development and `lab` machines. The exact UI-only VPK tested in both engines has SHA-256:
+Source/tested Steam build: **26020302**, Linux/Proton. The exact VPK tested on `lab` has SHA-256:
 
 ```
-928afd692d37ae0e23e6f91a2efaf6191c2495a1cd47665234440837a612282d
+f66d647139ab7fd8ff87b371c6cf95f42b1c63b883fe98178767bd2b71102248
 ```
 
-The manager assigned it `pak12_dir.vpk`; its bytes were identical to the release's `pak99_dir.vpk`. Archive filenames are not priority guarantees.
+The manager-installed archive is named `pak12_dir.vpk`; the download contains the same bytes as `pak99_dir.vpk`. Names are not load-priority guarantees. Verification flags in `data/validation.json` are bound to this hash and source build.
 
-Verification claims are bound to the exact VPK hash and source build in `data/validation.json`; changed code/build input must not inherit old status. ZIP metadata/license changes do not change the tested VPK, but the final ZIP is also checked for import/packaging behavior.
+## Flicker root cause and correction
 
-## Actual runtime evidence
+Version 0.2.0 moved native roster wrappers into release order, then corrected them on a 0.25-second timer. Runtime instrumentation showed that the game reuses those wrappers **by sibling index**, assigning the alphabetical hero list back into them on subsequent hover/selection updates. Moving the wrappers therefore changed the game's index-to-content mapping. The result was an alphabetical flash until the next corrective tick.
 
-The initial ID-only implementation loaded successfully but did not sort this build: its direct grid children and inner hero-card panels had empty IDs. A temporary diagnostic recorded native `Panel → CitadelHeroCard → HeroName` structure. That diagnostic is not shipped.
+Version 0.2.1 leaves native siblings and card instances untouched. It measures native card spacing/UI scale, disables flowing layout for this grid, and assigns release-ranked visual coordinates plus an explicit scroll height. Native hover updates retain the same index/content mapping and no longer require a corrective sibling reorder. The watchdog handles delayed geometry, replacement wrappers, changed populations and window width. Cached assigned styles avoid continuously invalidating native layout when Panorama's style getters are opaque.
 
-The correction resolves native labels/localization, retains direct-wrapper identity and moves those wrappers in place. The compiled VJS v4 raw-source resource and added native-layout script include were exercised in the real engine; no compiler RED2 block was required for this tested resource.
+## Actual game checks
 
-On the development machine, the game ran under Proton on a separate Xvfb display with a read-only base filesystem and copied game/userdata/prefix overlay. `-insecure` was used for this test, **not claimed as offline**. The host's existing mod archives and gameinfo hashes were unchanged. All three sandbox launches exited with code 0 when stopped. SteamVR logging, shader-cache database and crash-dump-directory writes failed under the read-only sandbox; these component-level write errors did not prevent the real-game checks.
+The final VPK above was installed into the existing **Release Order Roster** manager record and local-mod cache on `lab`. **Deadlock Mod Manager 1.1.0 (Flatpak)** launched the actual game through Steam. This validation exercised an update of the existing installation, not a new ZIP import; the original import/disable/remove lifecycle is documented separately in [0.2.0 verification](verification-0.2.0.md).
 
-On `lab`, **Deadlock Mod Manager 1.1.0 (Flatpak)** imported the ZIP through its real Add Local Mod interface, enabled it, and launched the normal game through Steam. Steam's displayed custom-argument confirmation was for `-condebug`; no credentials or sign-in intervention was needed. No matchmaking was entered.
+- Recorded **32 hover changes** across the first, middle and last roster rows over **20 seconds**.
+- Captured **1,200 video frames** at 60 captures/second. This is capture rate, not a claim of 60 game-rendered frames/second.
+- A frame classifier compared inner portrait crops across 44 slots against fixed release-order and alphabetical templates: **1,200 release-order frames, 0 alphabetical frames, 0 ambiguous frames**. This checks the visible order, rather than merely the final sorted state.
+- An earlier 0.2.0 baseline recording contained both orders: 240 alphabetical and 156 release-order frames. The shorter baseline is not duration-matched to the final recording.
+- The final capture ended on Violet with the live game still responding; no fatal content error or `[release-order] Stopped` appeared on `lab`.
+- Native quick search highlighted Violet. Clicking Violet, reopening and selecting Abrams, then reopening and selecting Bebop each closed the picker and selected the correct visual-slot hero in the room.
+- Known heroes retain manifest release order and alphabetical ties; locked Nurse Harrow remains last. Native controls and existing cosmetic mods were retained.
 
-### Checked in-game
+[Download the cropped transition recording](https://github.com/ZachZimm/deadlock-release-order/releases/download/v0.2.1/flicker-fix.mp4)
 
-- Engine logs matched all **43** known hero IDs against manifest order programmatically, not by guessing portraits.
-- Initial 19 first, then later release cohorts. The January 17, 2025 group is **Calico, Holliday, Sinclair, Vyper**.
-- Newest five: **Rat King, Baba, Solomon, Deadman Danny, Violet**.
-- Native locked **Nurse Harrow** remains visible after known releases, with lock/prerelease behavior intact.
-- Ten actual hover-label captures verified slots 1, 23–26 and 39–43. See [contact sheet](hover-order.png).
-- Native keyboard quick search still locates/highlights Violet; native mouse selection closes the picker and changes the room hero to Violet.
-- Cancel/reopen and native rebuilds retain ordering. No `[release-order] Stopped` failure appeared in either test's game log.
-- `lab` retained its existing cosmetic mods; this mod did not replace their payloads.
+![0.2.1 roster grid during the actual lab test](roster-0.2.1.png)
 
-![Real engine roster](roster.png)
+### Development-machine limitation
 
-## Manager lifecycle and safety
+On `zen`, isolated Xvfb/Proton tests reproduced the old flicker and showed the new visual layout. Extended scene-hover tests then reported the **base game's `pak01.vpk` as corrupt**, so frozen/error-dialog recordings from those attempts are not accepted as final transition evidence. No base game file was repaired or replaced. Sandbox SteamVR log, shader-cache and dump-directory write warnings also occurred. Final runtime acceptance comes from the successful normal-game test on `lab`, not from subprocess exit codes or the failed sandbox runs.
 
-- Imported ZIP with name **Release Order Roster**, author **ZachZimm**, category **HUD**.
-- Readback verified one installed manager record and one added archive, `pak12_dir.vpk`, with the exact tested hash.
-- Disable removed that archive and changed the record back to downloaded.
-- Removal through the manager deleted this mod's record/archive. All pre-existing addon payload hashes remained unchanged; existing mod status values also matched their baseline.
-- The manager launch added only a blank line to `gameinfo.gi`; token-level comparison was identical. No stock configuration replacement was supplied by the mod.
-- Existing addons and manager state were backed up on `lab` before installation.
+## Installation safety
 
-The final licensed ZIP (`b85ad7ba550d3efc2fd6e186ac9bd86607476aad148667d254a8a4c7781cc525`) was reimported through the real picker, enabled, and read back as the exact tested VPK. The manager process was stopped/restarted; its saved state, actual enabled toggle, and installed archive hash all persisted. The mod is left enabled on `lab`, with the game closed. The manager's whitespace-only gameinfo change was restored afterward, and readback confirmed original gameinfo bytes, every pre-existing addon payload and every pre-existing mod status matched the baseline.
+The installed VPK and cached local-import VPK were updated in place on both `lab` and `zen`, with originals, manager state, manifest and gameinfo backed up outside addons. Readback verified the exact final VPK. Other addon payloads and the selected Jacket variant were left unchanged. The game is not launched on `zen` as part of this update.
 
 ## Automated checks
 
-Final full run: **16 Python tests passed, 8 JavaScript tests passed**, and the Release .NET build reported **0 warnings and 0 errors**. Legacy prototype tests were removed from the public snapshot; these counts describe the current UI-only suite.
+**16 JavaScript tests and 16 Python tests pass.** The Release .NET build has **0 warnings and 0 errors**.
 
-The suite checks native-layout preservation after removing the one added include, raw VJS v4 DATA bytes, resource readback, exact two-asset VPK allowlist, independent extraction equality, ZIP contents and license, release-rank injection, and positive/negative layout fingerprints.
+The styled-panel regressions check zero native sibling moves, stable index/content assignments between watchdog callbacks, scaled geometry, opaque style getters, delayed layout readiness, same-signature replacement wrappers, filtered/empty/larger populations, resize wrapping and scroll extent. The actual packaged script is independently extracted/decompiled and executed against all 43 manifest heroes, unknown cards and nonhero slots; dropping the rank injection must fail the same harness.
 
-JavaScript tests exercise actual anonymous-wrapper structure, localized-name fallback, stable unknown cards, non-hero slots, identity-preserving moves, hidden/destroyed lifecycle, same-count rebuilds, filters, missing grids, ignored moves and API failures. The packaged-script harness decompiles the actual VPK, executes that code in Node, and asserts full manifest order; deliberately removed ranks must fail the same check.
-
-Manifest validation rejects empty data, duplicate/noninteger/Boolean/invalid IDs, bad/noncanonical dates and malformed names. Locked NuGet restore and Release builds are part of verification. Identical-input builds are compared for byte-identical VPK/ZIP output; current hashes are in `dist/SHA256SUMS`.
+Existing checks cover strict manifest validation, locked NuGet restore, exact native-layout preservation after removing the one added include, VJS v4 raw DATA, exact two-asset VPK contents, independent byte equality, licensed ZIP contents, compatibility fingerprints, and hash/build-bound verification metadata. Identical-input builds are compared for reproducibility; see `dist/SHA256SUMS` for download hashes.
 
 ## Limits
 
-No matchmaking/anti-cheat-policy certification, Valve approval, gamepad-specific certification, or real-engine non-English-locale certification is claimed. This still replaces one full UI layout and can conflict with other replacements. The native-layout fingerprint is not complete game-update compatibility enforcement. See [distribution notes](distribution.md).
-
-The earlier whole-hero-definition prototype and its artifact/history are not part of the public release. Public screenshots here come from the current UI-only implementation.
+No matchmaking/anti-cheat-policy certification, Valve approval, gamepad-specific certification, or real-engine non-English-locale certification is claimed. The mod still replaces one UI layout and conflicts with other replacements. A matching layout fingerprint is not complete game-update compatibility enforcement. Initial display/new population timing is distinct from the tested hover flicker; the watchdog is not a verified engine pre-render callback.

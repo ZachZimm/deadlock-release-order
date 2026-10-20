@@ -76,14 +76,14 @@ class BuildTests(unittest.TestCase):
                                      str(decompiled_script), json.dumps(expected), str(ROOT / 'data/heroes.json')],
                                     text=True, capture_output=True)
             self.assertNotEqual(result.returncode, 0, 'Empty ranks must fail packaged chronology validation')
-        with zipfile.ZipFile(ROOT / 'dist/release-order-roster-0.2.0.zip') as release:
+        with zipfile.ZipFile(ROOT / 'dist/release-order-roster-0.2.1.zip') as release:
             self.assertEqual(set(release.namelist()), {'pak99_dir.vpk', 'README.txt', 'release.json', 'LICENSE'})
             self.assertEqual(release.read('LICENSE'), (ROOT / 'LICENSE').read_bytes())
             readme = release.read('README.txt').decode()
             self.assertIn('Valve game assets remain the property of Valve', readme)
             self.assertIn('MIT license covers original code only', readme)
             self.assertEqual(release.read('pak99_dir.vpk'), vpk.read_bytes())
-            self.assertEqual(json.loads(release.read('release.json'))['version'], '0.2.0')
+            self.assertEqual(json.loads(release.read('release.json'))['version'], '0.2.1')
             metadata = json.loads(release.read('release.json'))
             for field, expected in validation.items():
                 self.assertEqual(metadata.get(field), expected, field)
@@ -142,7 +142,7 @@ class BuildTests(unittest.TestCase):
                 self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
                 expected = build.resolve_validation(record, artifact_hash, source_build)
                 audit = json.loads((root / 'dist/audit.json').read_text())
-                with zipfile.ZipFile(root / 'dist/release-order-roster-0.2.0.zip') as release:
+                with zipfile.ZipFile(root / 'dist/release-order-roster-0.2.1.zip') as release:
                     metadata = json.loads(release.read('release.json'))
                     readme = release.read('README.txt').decode()
                     for field, value in expected.items():

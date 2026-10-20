@@ -1,19 +1,19 @@
 {
   "name": "Release Order Roster",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "UI-only roster sorting by release date, with alphabetical ties.",
-  "source_game_build": "26020302",
+  "source_game_build": "26059233",
   "ui_only": true,
-  "runtime_verified": true,
-  "manager_verified": true,
-  "all_gates_passed": true,
-  "validation_status": "validated-local-and-manager",
+  "runtime_verified": false,
+  "manager_verified": false,
+  "all_gates_passed": false,
+  "validation_status": "experimental-runtime-unverified",
   "overrides": [
     "panorama/layout/popups/citadel_popup_roster_select.vxml_c"
   ],
   "adds": [
     "panorama/scripts/release_order.vjs_c"
   ],
-  "vpk_sha256": "928afd692d37ae0e23e6f91a2efaf6191c2495a1cd47665234440837a612282d",
+  "vpk_sha256": "f66d647139ab7fd8ff87b371c6cf95f42b1c63b883fe98178767bd2b71102248",
   "metadata_note": "Informational release metadata, not a manager-specific manifest."
 }

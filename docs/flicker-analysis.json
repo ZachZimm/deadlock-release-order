@@ -1,0 +1,27 @@
+{
+  "source_game_build": "26020302",
+  "vpk_sha256": "f66d647139ab7fd8ff87b371c6cf95f42b1c63b883fe98178767bd2b71102248",
+  "baseline": {
+    "version": "0.2.0",
+    "captured_frames": 396,
+    "release_order_frames": 156,
+    "alphabetical_order_frames": 240,
+    "ambiguous_frames": 0
+  },
+  "final": {
+    "version": "0.2.1",
+    "host": "lab",
+    "hover_changes": 32,
+    "duration_seconds": 20,
+    "capture_fps": 60,
+    "captured_frames": 1200,
+    "release_order_frames": 1200,
+    "alphabetical_order_frames": 0,
+    "ambiguous_frames": 0,
+    "native_quick_search": true,
+    "native_selection_checked": ["Violet", "Abrams", "Bebop"],
+    "fatal_content_error": false
+  },
+  "method": "Compare median mean absolute RGB distance of 44 inner portrait crops against fixed release-order and alphabetical templates; classify only when one distance is lower by more than 10 RGB units. Final live-game behavior and fatal-error-free logs were checked separately to reject frozen/error-dialog footage.",
+  "limits": "Capture rate is not game render rate. Baseline and final recordings are not duration-matched. No matchmaking or gamepad certification."
+}

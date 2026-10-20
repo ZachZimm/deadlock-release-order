@@ -1,8 +1,9 @@
-Release Order Roster 0.2.0
+Release Order Roster 0.2.1
 
-VALIDATED: locally in-game and through Mod Manager for this exact VPK and source build.
-Local in-game verification: passed
-Mod Manager verification: passed
+EXPERIMENTAL: not all local in-game and Mod Manager verification gates have passed.
+Do not publish or treat this as a validated public release.
+Local in-game verification: pending
+Mod Manager verification: pending
 
 UI-only: reorders existing hero cards; contains NO hero definitions or balance data.
 Oldest main-roster release first, with English alphabetical ties.
@@ -15,7 +16,7 @@ Do not replace gameinfo.gi or any stock game archive.
 
 CONFLICTS: Other replacements of the roster popup layout, including Hero Select Plus.
 Disable the old hero-definition-based version before enabling this one.
-Built using the roster layout from Steam build 26020302. UI layout updates may require
+Built using the roster layout from Steam build 26059233. UI layout updates may require
 a refreshed release. New hero dates need a release-data update for exact chronology.
 Online/anti-cheat compatibility and Valve approval are NOT guaranteed.
 Valve game assets remain the property of Valve; the MIT license covers original code only.

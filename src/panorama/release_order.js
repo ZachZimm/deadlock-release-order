@@ -84,6 +84,57 @@
         return changed;
     }
 
+    // Native UpdateHeroGrid rebinds heroes by sibling index. Never move those
+    // wrappers: keep their native indices and change only their visual positions.
+    function pinOrder(container, ranks, aliases, state) {
+        var cards = container.Children();
+        var scaleX = container.actualuiscale_x || 1;
+        var scaleY = container.actualuiscale_y || scaleX;
+        if (!container.style) { return applyOrder(container, ranks, aliases); }
+        if (!cards.length) { return false; }
+        if (!state.geometry) {
+            if (!(container.actuallayoutheight > 0) || !(container.actuallayoutwidth > 0)
+                    || cards.some(function (p) { return !p.style || !(p.actuallayoutwidth > 0)
+                        || !(p.actuallayoutheight > 0); })) {
+                return false; // Native layout is not ready; retry without caching failure.
+            }
+            var xs = cards.map(function (p) { return p.actualxoffset / scaleX; }).sort(function (a, b) { return a - b; });
+            var ys = cards.map(function (p) { return p.actualyoffset / scaleY; }).sort(function (a, b) { return a - b; });
+            function pitch(values, fallback) {
+                var step = Infinity;
+                for (var i = 1; i < values.length; i++) {
+                    if (values[i] - values[i - 1] > 0.5) { step = Math.min(step, values[i] - values[i - 1]); }
+                }
+                return isFinite(step) ? step : fallback;
+            }
+            var width = Math.max.apply(null, cards.map(function (p) { return p.actuallayoutwidth / scaleX; }));
+            var height = Math.max.apply(null, cards.map(function (p) { return p.actuallayoutheight / scaleY; }));
+            state.geometry = {
+                x: Math.max(width, pitch(xs, width)), y: Math.max(height, pitch(ys, height)),
+                width: width, height: height,
+                padX: Math.max(0, Math.min(2 * xs[0], container.actuallayoutwidth / scaleX - (xs[xs.length - 1] - xs[0] + width))),
+                padY: Math.max(0, container.actuallayoutheight / scaleY - (ys[ys.length - 1] - ys[0] + height))
+            };
+        }
+        var g = state.geometry;
+        var columns = Math.max(1, Math.floor((container.actuallayoutwidth / scaleX - g.padX + g.x - g.width + 0.5) / g.x));
+        var wanted = orderCards(cards, ranks, aliases);
+        var changed = !state.pinned;
+        wanted.forEach(function (panel, index) {
+            var value = (index % columns * g.x) + 'px ' + (Math.floor(index / columns) * g.y) + 'px 0px';
+            if (panel.__releaseOrderPosition !== value) {
+                panel.style.position = value;
+                panel.__releaseOrderPosition = value;
+                changed = true;
+            }
+        });
+        var extent = (Math.ceil(cards.length / columns) - 1) * g.y + g.height + g.padY;
+        var heightValue = extent + 'px';
+        if (state.height !== heightValue) { container.style.height = heightValue; state.height = heightValue; }
+        if (!state.pinned) { container.style.flowChildren = 'none'; state.pinned = true; }
+        return changed;
+    }
+
     function start(api, ranks, heroes) {
         var root = api.GetContextPanel();
         if (!root || typeof root.IsValid !== 'function' || typeof root.FindChildTraverse !== 'function'
@@ -105,11 +156,11 @@
                         && typeof container.MoveChildBefore === 'function') {
                     var cards = container.Children();
                     var currentSignature = signature(cards, aliases);
-                    if (currentSignature !== state.signature) {
-                        var changed = applyOrder(container, ranks, aliases);
+                    if (currentSignature !== state.signature || container.style) {
+                        var changed = pinOrder(container, ranks, aliases, state);
                         state.signature = signature(container.Children(), aliases);
                         if ((changed || !state.reported) && cards.some(function (panel) { return heroId(panel, aliases) !== null; })) {
-                            api.Msg('[release-order] UI-only roster: ' + state.signature);
+                            api.Msg('[release-order] UI-only roster: ' + signature(orderCards(cards, ranks, aliases), aliases));
                             state.reported = true;
                         }
                     }
